@@ -24,24 +24,26 @@
 #  <<: *default
 #  database: my_database_production
 default: &default
-host: localhost
+  adapter: postgresql
+  encoding: unicode
+  username: postgres
+  password: onyks179
+  host: localhost
+  port: 5432
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  adapter: postgresql
-  host: localhost
-  database: my_database_development
-  pool: 5
-  timeout: 5000
-test:
-  adapter: postgresql
+  <<: *default
+  database: simple_app_development
 
-  database: my_database_test
-  pool: 5
-  timeout: 5000
+test:
+  <<: *default
+  database: simple_app_test
 
 production:
-  adapter: postgresql
-
-  database: my_database_production
-  pool: 5
-  timeout: 5000
+  <<: *default
+  database: simple_app_production
+  username: simple_app
+  password: <%= ENV['SHOP_APP_DATABASE_PASSWORD'] %>
